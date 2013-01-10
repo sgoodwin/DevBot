@@ -7,6 +7,8 @@
 //
 
 #import "GOAppDelegate.h"
+#import "GOProject.h"
+#import "GOGitCheckOperation.h"
 
 @implementation GOAppDelegate
 
@@ -16,7 +18,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    self.processingQueue = [[NSOperationQueue alloc] init];
+    self.processingQueue.name = @"com.roundwall.DevBot";
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.roundwallsoftware.DevBot" in the user's Application Support directory.
@@ -83,7 +86,7 @@
     
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"DevBot.storedata"];
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-    if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
+    if (![coordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:url options:nil error:&error]) {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
@@ -108,7 +111,7 @@
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
 
     return _managedObjectContext;
@@ -151,15 +154,24 @@
         return NSTerminateNow;
     }
     
+    if(![self saveContext:[self managedObjectContext]]){
+        return NSTerminateCancel;
+    }
+
+    return NSTerminateNow;
+}
+
+- (BOOL)saveContext:(NSManagedObjectContext *)context
+{
     NSError *error = nil;
     if (![[self managedObjectContext] save:&error]) {
-
-        // Customize this code block to include application-specific recovery steps.              
-        BOOL result = [sender presentError:error];
+        
+        // Customize this code block to include application-specific recovery steps.
+        BOOL result = [NSApp presentError:error];
         if (result) {
             return NSTerminateCancel;
         }
-
+        
         NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
         NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
         NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
@@ -169,15 +181,51 @@
         [alert setInformativeText:info];
         [alert addButtonWithTitle:quitButton];
         [alert addButtonWithTitle:cancelButton];
-
+        
         NSInteger answer = [alert runModal];
         
         if (answer == NSAlertAlternateReturn) {
-            return NSTerminateCancel;
+            return NO;
         }
     }
+    return YES;
+}
 
-    return NSTerminateNow;
+- (IBAction)addProject:(id)sender
+{
+    [GOProject deleteAllProjectsInContext:[self managedObjectContext]];
+    
+    GOProject *project = [GOProject insertInManagedObjectContext:[self managedObjectContext]];
+    project.title = @"Lighthouse Keeper";
+    project.path = @"/Users/sgoodwin/Documents/DFSW/Lighthouse-Keeper";
+    project.stateValue = GOProjectStateIdle;
+    [self saveAction:nil];
+}
+
+- (IBAction)runSomething:(id)sender
+{
+    NSManagedObjectContext *mainContext = [self managedObjectContext];
+    NSArray *projects = [GOProject allProjectsInContext:[self managedObjectContext]];
+    
+    [projects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        GOProject *project = obj;
+        
+        GOGitCheckOperation *operation = [[GOGitCheckOperation alloc] initWithProjectPath:[project path]];
+        __weak GOGitCheckOperation *weakOperation = operation;
+        [weakOperation setCompletionBlock:^{
+            NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [childContext setParentContext:mainContext];
+            
+            GOProject *resultProject = (GOProject*)[childContext objectWithID:[project objectID]];
+            [resultProject setRevision:weakOperation.latestRevision];
+            
+            if(![self saveContext:childContext]){
+                NSLog(@"Failed to save child!");
+            }
+        }];
+        
+        [[self processingQueue] addOperation:operation];
+    }];
 }
 
 @end

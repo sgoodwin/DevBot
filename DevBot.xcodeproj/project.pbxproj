@@ -18,6 +18,10 @@
 		9B5DBA99169F568000AD073F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5DBA76169F568000AD073F /* Cocoa.framework */; };
 		9B5DBAA1169F568000AD073F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B5DBA9F169F568000AD073F /* InfoPlist.strings */; };
 		9B5DBAA4169F568000AD073F /* DevBotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAA3169F568000AD073F /* DevBotTests.m */; };
+		9B5DBAB1169F57DE00AD073F /* _GOProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAAE169F57DE00AD073F /* _GOProject.m */; };
+		9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB0169F57DE00AD073F /* GOProject.m */; };
+		9B5DBAB6169F5AED00AD073F /* GOStateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */; };
+		9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,14 @@
 		9B5DBAA0169F568000AD073F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9B5DBAA2169F568000AD073F /* DevBotTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevBotTests.h; sourceTree = "<group>"; };
 		9B5DBAA3169F568000AD073F /* DevBotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevBotTests.m; sourceTree = "<group>"; };
+		9B5DBAAD169F57DE00AD073F /* _GOProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _GOProject.h; sourceTree = "<group>"; };
+		9B5DBAAE169F57DE00AD073F /* _GOProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _GOProject.m; sourceTree = "<group>"; };
+		9B5DBAAF169F57DE00AD073F /* GOProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOProject.h; sourceTree = "<group>"; };
+		9B5DBAB0169F57DE00AD073F /* GOProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOProject.m; sourceTree = "<group>"; };
+		9B5DBAB4169F5AED00AD073F /* GOStateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOStateTransformer.h; sourceTree = "<group>"; };
+		9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOStateTransformer.m; sourceTree = "<group>"; };
+		9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOGitCheckOperation.h; sourceTree = "<group>"; };
+		9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOGitCheckOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,11 +128,14 @@
 		9B5DBA7C169F568000AD073F /* DevBot */ = {
 			isa = PBXGroup;
 			children = (
+				9B5DBAB3169F57E600AD073F /* Model */,
 				9B5DBA88169F568000AD073F /* GOAppDelegate.h */,
 				9B5DBA89169F568000AD073F /* GOAppDelegate.m */,
 				9B5DBA8B169F568000AD073F /* MainMenu.xib */,
 				9B5DBA8E169F568000AD073F /* DevBot.xcdatamodeld */,
 				9B5DBA7D169F568000AD073F /* Supporting Files */,
+				9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */,
+				9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */,
 			);
 			path = DevBot;
 			sourceTree = "<group>";
@@ -154,6 +169,19 @@
 				9B5DBA9F169F568000AD073F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9B5DBAB3169F57E600AD073F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9B5DBAAD169F57DE00AD073F /* _GOProject.h */,
+				9B5DBAAE169F57DE00AD073F /* _GOProject.m */,
+				9B5DBAAF169F57DE00AD073F /* GOProject.h */,
+				9B5DBAB0169F57DE00AD073F /* GOProject.m */,
+				9B5DBAB4169F5AED00AD073F /* GOStateTransformer.h */,
+				9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +296,10 @@
 				9B5DBA83169F568000AD073F /* main.m in Sources */,
 				9B5DBA8A169F568000AD073F /* GOAppDelegate.m in Sources */,
 				9B5DBA90169F568000AD073F /* DevBot.xcdatamodeld in Sources */,
+				9B5DBAB1169F57DE00AD073F /* _GOProject.m in Sources */,
+				9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */,
+				9B5DBAB6169F5AED00AD073F /* GOStateTransformer.m in Sources */,
+				9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
