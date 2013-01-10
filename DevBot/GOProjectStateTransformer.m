@@ -6,7 +6,7 @@
 //
 
 #import "GOProjectStateTransformer.h"
-#import "GOProject.h"
+#import "GOConstants.h"
 
 @implementation GOProjectStateTransformer
 

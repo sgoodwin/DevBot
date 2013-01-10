@@ -1,5 +1,7 @@
 #import "GOProject.h"
+#import "GOConstants.h"
 #import "GOGitCheckOperation.h"
+#import "GOXcodeBuildOperation.h"
 
 @implementation GOProject
 
@@ -37,8 +39,17 @@
         [childContext performBlock:^{
             GOProject *resultProject = (GOProject*)[childContext objectWithID:projectID];
             NSParameterAssert(resultProject);
-            [resultProject setRevision:weakOperation.latestRevision];
-            NSLog(@"Result project has revision: %@", resultProject.revision);
+            
+            NSString *revision = weakOperation.latestRevision;
+            if([revision isEqualToString:resultProject.revision]){
+                [resultProject setStateValue:GOProjectStateIdle];
+            }else{
+                [resultProject setRevision:weakOperation.latestRevision];
+                
+                // The revision is different than the one we had stored, so it's build time.
+                [resultProject setStateValue:GOProjectStateBuilding];
+                [resultProject buildInQueue:queue withContext:mainContext];
+            }
             
             NSError *savingError = nil;
             if(![childContext save:&savingError]){
@@ -47,6 +58,30 @@
         }];
     }];
     [queue addOperation:operation];
+}
+
+- (void)buildInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
+{
+    GOProjectID *projectID = [self objectID];
+    
+    GOXcodeBuildOperation *buildOperation = [[GOXcodeBuildOperation alloc] initWithPath:self.path];
+    __weak GOXcodeBuildOperation *weakOperation = buildOperation;
+    [weakOperation setCompletionBlock:^{
+        NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [childContext setParentContext:mainContext];
+        
+        [childContext performBlock:^{
+            GOProject *project = (GOProject*)[childContext objectWithID:projectID];
+            [project setStateValue:GOProjectStateIdle];
+            
+            NSError *savingError = nil;
+            if(![childContext save:&savingError]){
+                NSLog(@"Failed to save child! %@", savingError);
+            }
+        }];
+    }];
+    
+    [queue addOperation:buildOperation];
 }
 
 @end

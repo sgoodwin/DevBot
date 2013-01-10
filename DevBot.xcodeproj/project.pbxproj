@@ -22,6 +22,7 @@
 		9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB0169F57DE00AD073F /* GOProject.m */; };
 		9B5DBAB6169F5AED00AD073F /* GOProjectStateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB5169F5AED00AD073F /* GOProjectStateTransformer.m */; };
 		9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */; };
+		9B5DBAC0169F73CE00AD073F /* GOXcodeBuildOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBABF169F73CE00AD073F /* GOXcodeBuildOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,9 @@
 		9B5DBAB5169F5AED00AD073F /* GOProjectStateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOProjectStateTransformer.m; sourceTree = "<group>"; };
 		9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOGitCheckOperation.h; sourceTree = "<group>"; };
 		9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOGitCheckOperation.m; sourceTree = "<group>"; };
+		9B5DBABE169F73CE00AD073F /* GOXcodeBuildOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOXcodeBuildOperation.h; sourceTree = "<group>"; };
+		9B5DBABF169F73CE00AD073F /* GOXcodeBuildOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOXcodeBuildOperation.m; sourceTree = "<group>"; };
+		9B5DBAC1169F75E600AD073F /* GOConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GOConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,9 @@
 				9B5DBA7D169F568000AD073F /* Supporting Files */,
 				9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */,
 				9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */,
+				9B5DBABE169F73CE00AD073F /* GOXcodeBuildOperation.h */,
+				9B5DBABF169F73CE00AD073F /* GOXcodeBuildOperation.m */,
+				9B5DBAC1169F75E600AD073F /* GOConstants.h */,
 			);
 			path = DevBot;
 			sourceTree = "<group>";
@@ -300,6 +307,7 @@
 				9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */,
 				9B5DBAB6169F5AED00AD073F /* GOProjectStateTransformer.m in Sources */,
 				9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */,
+				9B5DBAC0169F73CE00AD073F /* GOXcodeBuildOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

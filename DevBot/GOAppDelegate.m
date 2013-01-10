@@ -7,6 +7,7 @@
 
 #import "GOAppDelegate.h"
 #import "GOProject.h"
+#import "GOConstants.h"
 
 @interface GOAppDelegate()
 @property (nonatomic, strong) NSTimer *processingTimer;
@@ -194,8 +195,8 @@
     [GOProject deleteAllProjectsInContext:[self mainQueueContext]];
     
     GOProject *project = [GOProject insertInManagedObjectContext:[self mainQueueContext]];
-    project.title = @"Lighthouse Keeper";
-    project.path = @"/Users/sgoodwin/Documents/DFSW/Lighthouse-Keeper";
+    project.title = @"Broadcasts";
+    project.path = @"/Users/sgoodwin/Desktop/Roundwall Software/Broadcasts";
     project.stateValue = GOProjectStateIdle;
     [self saveAction:nil];
 }
@@ -218,6 +219,12 @@
     
     [projects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         GOProject *project = obj;
+        [project setStateValue:GOProjectStateWaiting];
+        
+        NSError *savingError = nil;
+        if(![[self mainQueueContext] save:&savingError]){
+            NSLog(@"Failed to save changing project to waiting: %@", savingError);
+        }
         
         [project updateInQueue:[self processingQueue] withContext:mainContext];
     }];
