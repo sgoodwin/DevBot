@@ -7,13 +7,15 @@
 
 #import "GOAppDelegate.h"
 #import "GOProject.h"
-#import "GOGitCheckOperation.h"
+
+@interface GOAppDelegate()
+@property (nonatomic, strong) NSTimer *processingTimer;
+@end
 
 @implementation GOAppDelegate
-
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize mainQueueContext = _managedObjectContext;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -21,6 +23,9 @@
     self.processingQueue.name = @"com.roundwall.DevBot";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    
+    // Every 5 minutes do the damn thing.
+    self.processingTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 target:self selector:@selector(processAllProjects) userInfo:nil repeats:YES];
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.roundwallsoftware.DevBot" in the user's Application Support directory.
@@ -96,8 +101,8 @@
     return _persistentStoreCoordinator;
 }
 
-// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) 
-- (NSManagedObjectContext *)managedObjectContext
+// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
+- (NSManagedObjectContext *)mainQueueContext
 {
     if (_managedObjectContext) {
         return _managedObjectContext;
@@ -114,14 +119,14 @@
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-
+    
     return _managedObjectContext;
 }
 
 // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
 {
-    return [[self managedObjectContext] undoManager];
+    return [[self mainQueueContext] undoManager];
 }
 
 // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
@@ -129,11 +134,11 @@
 {
     NSError *error = nil;
     
-    if (![[self managedObjectContext] commitEditing]) {
+    if (![[self mainQueueContext] commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
     }
     
-    if (![[self managedObjectContext] save:&error]) {
+    if (![[self mainQueueContext] save:&error]) {
         [[NSApplication sharedApplication] presentError:error];
     }
 }
@@ -146,26 +151,17 @@
         return NSTerminateNow;
     }
     
-    if (![[self managedObjectContext] commitEditing]) {
+    if (![[self mainQueueContext] commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
         return NSTerminateCancel;
     }
     
-    if (![[self managedObjectContext] hasChanges]) {
+    if (![[self mainQueueContext] hasChanges]) {
         return NSTerminateNow;
     }
     
-    if(![self saveContext:[self managedObjectContext]]){
-        return NSTerminateCancel;
-    }
-
-    return NSTerminateNow;
-}
-
-- (BOOL)saveContext:(NSManagedObjectContext *)context
-{
     NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
+    if (![[self mainQueueContext] save:&error]) {
         
         // Customize this code block to include application-specific recovery steps.
         BOOL result = [NSApp presentError:error];
@@ -186,17 +182,18 @@
         NSInteger answer = [alert runModal];
         
         if (answer == NSAlertAlternateReturn) {
-            return NO;
+            return NSTerminateCancel;
         }
     }
-    return YES;
+    
+    return NSTerminateNow;
 }
 
 - (IBAction)addProject:(id)sender
 {
-    [GOProject deleteAllProjectsInContext:[self managedObjectContext]];
+    [GOProject deleteAllProjectsInContext:[self mainQueueContext]];
     
-    GOProject *project = [GOProject insertInManagedObjectContext:[self managedObjectContext]];
+    GOProject *project = [GOProject insertInManagedObjectContext:[self mainQueueContext]];
     project.title = @"Lighthouse Keeper";
     project.path = @"/Users/sgoodwin/Documents/DFSW/Lighthouse-Keeper";
     project.stateValue = GOProjectStateIdle;
@@ -205,35 +202,25 @@
 
 - (IBAction)runSomething:(id)sender
 {
-    NSManagedObjectContext *mainContext = [self managedObjectContext];
-    NSArray *projects = [GOProject allProjectsInContext:[self managedObjectContext]];
-    
-    [projects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        GOProject *project = obj;
-        
-        GOGitCheckOperation *operation = [[GOGitCheckOperation alloc] initWithProjectPath:[project path]];
-        __weak GOGitCheckOperation *weakOperation = operation;
-        [weakOperation setCompletionBlock:^{
-            NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            [childContext setParentContext:mainContext];
-            
-            [childContext performBlock:^{
-                GOProject *resultProject = (GOProject*)[childContext objectWithID:[project objectID]];
-                NSParameterAssert(resultProject);
-                [resultProject setRevision:weakOperation.latestRevision];
-                
-                if(![self saveContext:childContext]){
-                    NSLog(@"Failed to save child!");
-                }
-            }];
-        }];
-        
-        [[self processingQueue] addOperation:operation];
-    }];
+    [self processAllProjects];
 }
 
 - (void)didChangeContext:(NSNotification *)notification
 {
+    
+}
+
+- (void)processAllProjects
+{
+    NSLog(@"Processing projects...");
+    NSManagedObjectContext *mainContext = [self mainQueueContext];
+    NSArray *projects = [GOProject allProjectsInContext:mainContext];
+    
+    [projects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        GOProject *project = obj;
+        
+        [project updateInQueue:[self processingQueue] withContext:mainContext];
+    }];
     
 }
 

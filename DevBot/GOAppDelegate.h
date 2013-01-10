@@ -13,7 +13,7 @@
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *mainQueueContext;
 @property (nonatomic, strong) NSOperationQueue *processingQueue;
 
 - (IBAction)saveAction:(id)sender;
