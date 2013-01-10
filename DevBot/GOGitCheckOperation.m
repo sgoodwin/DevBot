@@ -43,8 +43,7 @@
 
 - (BOOL)pullFromBranch:(NSString *)branch
 {
-    NSTask *gitTask = [[NSTask alloc] init];
-    [gitTask setLaunchPath:@"/usr/bin/xcrun"];
+    NSTask *gitTask = [NSTask newXCRunTask];
     [gitTask setCurrentDirectoryPath:self.folderPath];
     [gitTask setArguments:@[@"git", @"pull", @"origin", branch]];
     
@@ -66,8 +65,7 @@
 
 - (void)retrieveLatestRevision
 {
-    NSTask *gitTask = [[NSTask alloc] init];
-    [gitTask setLaunchPath:@"/usr/bin/xcrun"];
+    NSTask *gitTask = [NSTask newXCRunTask];
     [gitTask setCurrentDirectoryPath:self.folderPath];
     [gitTask setArguments:@[@"git", @"rev-parse", @"HEAD"]];
     
