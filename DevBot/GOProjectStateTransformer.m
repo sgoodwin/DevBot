@@ -3,13 +3,12 @@
 //  DevBot
 //
 //  Created by Samuel Goodwin on 1/10/13.
-//  Copyright (c) 2013 Roundwall Software. All rights reserved.
 //
 
-#import "GOStateTransformer.h"
+#import "GOProjectStateTransformer.h"
 #import "GOProject.h"
 
-@implementation GOStateTransformer
+@implementation GOProjectStateTransformer
 
 + (Class)transformedValueClass { return [NSString class]; }
 + (BOOL)allowsReverseTransformation { return NO; }

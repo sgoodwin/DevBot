@@ -20,7 +20,7 @@
 		9B5DBAA4169F568000AD073F /* DevBotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAA3169F568000AD073F /* DevBotTests.m */; };
 		9B5DBAB1169F57DE00AD073F /* _GOProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAAE169F57DE00AD073F /* _GOProject.m */; };
 		9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB0169F57DE00AD073F /* GOProject.m */; };
-		9B5DBAB6169F5AED00AD073F /* GOStateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */; };
+		9B5DBAB6169F5AED00AD073F /* GOProjectStateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB5169F5AED00AD073F /* GOProjectStateTransformer.m */; };
 		9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +59,8 @@
 		9B5DBAAE169F57DE00AD073F /* _GOProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _GOProject.m; sourceTree = "<group>"; };
 		9B5DBAAF169F57DE00AD073F /* GOProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOProject.h; sourceTree = "<group>"; };
 		9B5DBAB0169F57DE00AD073F /* GOProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOProject.m; sourceTree = "<group>"; };
-		9B5DBAB4169F5AED00AD073F /* GOStateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOStateTransformer.h; sourceTree = "<group>"; };
-		9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOStateTransformer.m; sourceTree = "<group>"; };
+		9B5DBAB4169F5AED00AD073F /* GOProjectStateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOProjectStateTransformer.h; sourceTree = "<group>"; };
+		9B5DBAB5169F5AED00AD073F /* GOProjectStateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOProjectStateTransformer.m; sourceTree = "<group>"; };
 		9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOGitCheckOperation.h; sourceTree = "<group>"; };
 		9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOGitCheckOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,8 +178,8 @@
 				9B5DBAAE169F57DE00AD073F /* _GOProject.m */,
 				9B5DBAAF169F57DE00AD073F /* GOProject.h */,
 				9B5DBAB0169F57DE00AD073F /* GOProject.m */,
-				9B5DBAB4169F5AED00AD073F /* GOStateTransformer.h */,
-				9B5DBAB5169F5AED00AD073F /* GOStateTransformer.m */,
+				9B5DBAB4169F5AED00AD073F /* GOProjectStateTransformer.h */,
+				9B5DBAB5169F5AED00AD073F /* GOProjectStateTransformer.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 				9B5DBA90169F568000AD073F /* DevBot.xcdatamodeld in Sources */,
 				9B5DBAB1169F57DE00AD073F /* _GOProject.m in Sources */,
 				9B5DBAB2169F57DE00AD073F /* GOProject.m in Sources */,
-				9B5DBAB6169F5AED00AD073F /* GOStateTransformer.m in Sources */,
+				9B5DBAB6169F5AED00AD073F /* GOProjectStateTransformer.m in Sources */,
 				9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
