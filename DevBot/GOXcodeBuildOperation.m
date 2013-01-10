@@ -33,8 +33,7 @@
 
 - (void)buildProject
 {
-    NSTask *gitTask = [[NSTask alloc] init];
-    [gitTask setLaunchPath:@"/usr/bin/xcodebuild"];
+    NSTask *gitTask = [NSTask newXCodeBuildTask];
     [gitTask setCurrentDirectoryPath:self.folderPath];
     [gitTask setArguments:@[@"-configuration", @"Release"]];
         
