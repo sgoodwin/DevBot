@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91F6C948169F84CE00F9D61A /* NSTask+GOGit.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6C947169F84CE00F9D61A /* NSTask+GOGit.m */; };
 		9B5DBA77169F568000AD073F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5DBA76169F568000AD073F /* Cocoa.framework */; };
 		9B5DBA81169F568000AD073F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B5DBA7F169F568000AD073F /* InfoPlist.strings */; };
 		9B5DBA83169F568000AD073F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBA82169F568000AD073F /* main.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		91F6C946169F84CE00F9D61A /* NSTask+GOGit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+GOGit.h"; sourceTree = "<group>"; };
+		91F6C947169F84CE00F9D61A /* NSTask+GOGit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+GOGit.m"; sourceTree = "<group>"; };
 		9B5DBA72169F568000AD073F /* DevBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5DBA76169F568000AD073F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9B5DBA79169F568000AD073F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -138,6 +141,8 @@
 				9B5DBA8B169F568000AD073F /* MainMenu.xib */,
 				9B5DBA8E169F568000AD073F /* DevBot.xcdatamodeld */,
 				9B5DBA7D169F568000AD073F /* Supporting Files */,
+				91F6C946169F84CE00F9D61A /* NSTask+GOGit.h */,
+				91F6C947169F84CE00F9D61A /* NSTask+GOGit.m */,
 				9B5DBAB7169F5DDF00AD073F /* GOGitCheckOperation.h */,
 				9B5DBAB8169F5DDF00AD073F /* GOGitCheckOperation.m */,
 				9B5DBABE169F73CE00AD073F /* GOXcodeBuildOperation.h */,
@@ -308,6 +313,7 @@
 				9B5DBAB6169F5AED00AD073F /* GOProjectStateTransformer.m in Sources */,
 				9B5DBAB9169F5DDF00AD073F /* GOGitCheckOperation.m in Sources */,
 				9B5DBAC0169F73CE00AD073F /* GOXcodeBuildOperation.m in Sources */,
+				91F6C948169F84CE00F9D61A /* NSTask+GOGit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +497,7 @@
 				9B5DBAA9169F568000AD073F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9B5DBAAA169F568000AD073F /* Build configuration list for PBXNativeTarget "DevBotTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +506,7 @@
 				9B5DBAAC169F568000AD073F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

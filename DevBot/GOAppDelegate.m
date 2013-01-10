@@ -192,13 +192,22 @@
 
 - (IBAction)addProject:(id)sender
 {
-    [GOProject deleteAllProjectsInContext:[self mainQueueContext]];
-    
-    GOProject *project = [GOProject insertInManagedObjectContext:[self mainQueueContext]];
-    project.title = @"Broadcasts";
-    project.path = @"/Users/sgoodwin/Desktop/Roundwall Software/Broadcasts";
-    project.stateValue = GOProjectStateIdle;
-    [self saveAction:nil];
+	NSOpenPanel *panel = [NSOpenPanel openPanel];
+	[panel setCanChooseDirectories:YES];
+	[panel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+		NSString *title = [panel.URL lastPathComponent];
+		NSString *path = [panel.URL path];
+		
+		// TODO: sanity checks to make sure this result is actually an xcode project
+		
+		[GOProject deleteAllProjectsInContext:[self mainQueueContext]];
+		
+		GOProject *project = [GOProject insertInManagedObjectContext:[self mainQueueContext]];
+		project.title = title;
+		project.path = path;
+		project.stateValue = GOProjectStateIdle;
+		[self saveAction:nil];
+	}];
 }
 
 - (IBAction)runSomething:(id)sender
