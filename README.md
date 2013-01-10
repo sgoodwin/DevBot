@@ -1,6 +1,3 @@
-DevBot
-======
-
 # Automated builds of Xcode projects.
 
 This project aims to make it simpler to make sure your Xcode-based projects are automatically built when changes show up in git. 
