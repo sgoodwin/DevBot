@@ -19,6 +19,8 @@
 {
     self.processingQueue = [[NSOperationQueue alloc] init];
     self.processingQueue.name = @"com.roundwall.DevBot";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.roundwallsoftware.DevBot" in the user's Application Support directory.
@@ -215,16 +217,24 @@
             NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             [childContext setParentContext:mainContext];
             
-            GOProject *resultProject = (GOProject*)[childContext objectWithID:[project objectID]];
-            [resultProject setRevision:weakOperation.latestRevision];
-            
-            if(![self saveContext:childContext]){
-                NSLog(@"Failed to save child!");
-            }
+            [childContext performBlock:^{
+                GOProject *resultProject = (GOProject*)[childContext objectWithID:[project objectID]];
+                NSParameterAssert(resultProject);
+                [resultProject setRevision:weakOperation.latestRevision];
+                
+                if(![self saveContext:childContext]){
+                    NSLog(@"Failed to save child!");
+                }
+            }];
         }];
         
         [[self processingQueue] addOperation:operation];
     }];
+}
+
+- (void)didChangeContext:(NSNotification *)notification
+{
+    
 }
 
 @end

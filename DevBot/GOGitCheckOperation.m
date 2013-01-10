@@ -18,18 +18,25 @@
     self = [super init];
     if(self){
         self.folderPath = [path copy];
+        self.executing = NO;
+        self.finished = NO;
     }
     return self;
 }
 
 - (void)start
 {
+    self.executing = YES;
+    
     if([self pullFromBranch:@"master"]){
         [self retrieveLatestRevision];
     }else{
         NSLog(@"Failed to pull to latest!");
     }
     NSLog (@"Git Operation Results: %@", self.latestRevision);
+    
+    self.executing = NO;
+    self.finished = YES;
 }
 
 #pragma mark - Helpers
