@@ -47,20 +47,38 @@
     [gitTask setCurrentDirectoryPath:self.folderPath];
     [gitTask setArguments:@[@"-configuration", @"Release"]];
         
-    NSPipe *pipe = [NSPipe pipe];
-    [gitTask setStandardOutput:pipe];
+    NSPipe *standardOuputPipe = [NSPipe pipe];
+    [gitTask setStandardOutput:standardOuputPipe];
         
-    NSFileHandle *file = [pipe fileHandleForReading];
+    NSFileHandle *standardOutputHandle = [standardOuputPipe fileHandleForReading];
         
     [gitTask launch];
     [gitTask waitUntilExit];
         
-    NSData *data = [file readDataToEndOfFile];
-    self.rawText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSData *standardOutputData = [standardOutputHandle readDataToEndOfFile];
+    self.rawText = [[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding];
     
     if([gitTask terminationStatus] != DVBTaskSucessCode){
-        self.buildError = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: @"The Xcode build failed." }];
+        self.buildError = [self errorFromRawText];
     }
+}
+
+- (NSError *)errorFromRawText
+{
+    NSError *error = nil;
+    NSRegularExpression *errorRegex = [NSRegularExpression regularExpressionWithPattern:@".*:.*:.* error:.*" options:0 error:&error];
+    NSParameterAssert(errorRegex);
+    
+    NSMutableSet *errorLines = [[NSMutableSet alloc] init];
+    
+    [errorRegex enumerateMatchesInString:self.rawText options:0 range:NSMakeRange(0, [self.rawText length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        NSRange range = [result rangeAtIndex:0];
+        [errorLines addObject:[self.rawText substringWithRange:range]];
+    }];
+    
+    NSLog(@"Error lines: %@", errorLines);
+    NSString *errorString = [[errorLines allObjects] componentsJoinedByString:@", "];
+    return [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: errorString }];
 }
 
 @end

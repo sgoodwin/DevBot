@@ -85,6 +85,7 @@
             
             if(buildError){
                 [project setStateValue:DVBProjectStateFailed];
+                // TODO: decide on a good way to communicate build errors to the user when this is running on a headless machine.
             }else{
                 [project setStateValue:DVBProjectStateIdle];
             }
