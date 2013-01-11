@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSTask (GOGit)
+@interface NSTask (DVBTasks)
 
 + (instancetype)newTaskForPath:(NSString *)path;
 + (instancetype)newXCRunTask;

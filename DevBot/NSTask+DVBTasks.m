@@ -5,9 +5,9 @@
 //  Created by Doug Russell on 1/10/13.
 //
 
-#import "NSTask+GOGit.h"
+#import "NSTask+DVBTasks.h"
 
-@implementation NSTask (GOGit)
+@implementation NSTask (DVBTasks)
 
 static NSString *const xcrunPath = @"/usr/bin/xcrun";
 static NSString *const xcodeBuildPath = @"/usr/bin/xcodebuild";
