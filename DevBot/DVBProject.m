@@ -1,9 +1,17 @@
-#import "GOProject.h"
-#import "GOConstants.h"
-#import "GOGitCheckOperation.h"
-#import "GOXcodeBuildOperation.h"
+#import "DVBProject.h"
+#import "DVBConstants.h"
+#import "DVBGitCheckOperation.h"
+#import "DVBXcodeBuildOperation.h"
 
-@implementation GOProject
+
+@interface DVBProject ()
+
+// Private interface goes here.
+
+@end
+
+
+@implementation DVBProject
 
 + (NSArray *)allProjectsInContext:(NSManagedObjectContext *)context
 {
@@ -28,26 +36,26 @@
 
 - (void)updateInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
 {
-    GOProjectID *projectID = [self objectID];
+    DVBProjectID *projectID = [self objectID];
     
-    GOGitCheckOperation *operation = [[GOGitCheckOperation alloc] initWithProjectPath:[self path]];
-    __weak GOGitCheckOperation *weakOperation = operation;
+    DVBGitCheckOperation *operation = [[DVBGitCheckOperation alloc] initWithProjectPath:[self path]];
+    __weak DVBGitCheckOperation *weakOperation = operation;
     [weakOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];
         
         [childContext performBlock:^{
-            GOProject *resultProject = (GOProject*)[childContext objectWithID:projectID];
+            DVBProject *resultProject = (DVBProject*)[childContext objectWithID:projectID];
             NSParameterAssert(resultProject);
             
             NSString *revision = weakOperation.latestRevision;
             if([revision isEqualToString:resultProject.revision]){
-                [resultProject setStateValue:GOProjectStateIdle];
+                [resultProject setStateValue:DVBProjectStateIdle];
             }else{
                 [resultProject setRevision:weakOperation.latestRevision];
                 
                 // The revision is different than the one we had stored, so it's build time.
-                [resultProject setStateValue:GOProjectStateBuilding];
+                [resultProject setStateValue:DVBProjectStateBuilding];
                 [resultProject buildInQueue:queue withContext:mainContext];
             }
             
@@ -62,17 +70,17 @@
 
 - (void)buildInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
 {
-    GOProjectID *projectID = [self objectID];
+    DVBProjectID *projectID = [self objectID];
     
-    GOXcodeBuildOperation *buildOperation = [[GOXcodeBuildOperation alloc] initWithPath:self.path];
-    __weak GOXcodeBuildOperation *weakOperation = buildOperation;
+    DVBXcodeBuildOperation *buildOperation = [[DVBXcodeBuildOperation alloc] initWithPath:self.path];
+    __weak DVBXcodeBuildOperation *weakOperation = buildOperation;
     [weakOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];
         
         [childContext performBlock:^{
-            GOProject *project = (GOProject*)[childContext objectWithID:projectID];
-            [project setStateValue:GOProjectStateIdle];
+            DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];
+            [project setStateValue:DVBProjectStateIdle];
             
             NSError *savingError = nil;
             if(![childContext save:&savingError]){

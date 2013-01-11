@@ -1,19 +1,19 @@
 //
-//  GOAppDelegate.m
+//  DVBAppDelegate.m
 //  DevBot
 //
 //  Created by Samuel Goodwin on 1/10/13.
 //
 
-#import "GOAppDelegate.h"
-#import "GOProject.h"
-#import "GOConstants.h"
+#import "DVBAppDelegate.h"
+#import "DVBProject.h"
+#import "DVBConstants.h"
 
-@interface GOAppDelegate()
+@interface DVBAppDelegate()
 @property (nonatomic, strong) NSTimer *processingTimer;
 @end
 
-@implementation GOAppDelegate
+@implementation DVBAppDelegate
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize mainQueueContext = _managedObjectContext;
@@ -200,12 +200,12 @@
 		
 		// TODO: sanity checks to make sure this result is actually an xcode project
 		
-		[GOProject deleteAllProjectsInContext:[self mainQueueContext]];
+		[DVBProject deleteAllProjectsInContext:[self mainQueueContext]];
 		
-		GOProject *project = [GOProject insertInManagedObjectContext:[self mainQueueContext]];
+		DVBProject *project = [DVBProject insertInManagedObjectContext:[self mainQueueContext]];
 		project.title = title;
 		project.path = path;
-		project.stateValue = GOProjectStateIdle;
+		project.stateValue = DVBProjectStateIdle;
 		[self saveAction:nil];
 	}];
 }
@@ -224,11 +224,11 @@
 {
     NSLog(@"Processing projects...");
     NSManagedObjectContext *mainContext = [self mainQueueContext];
-    NSArray *projects = [GOProject allProjectsInContext:mainContext];
+    NSArray *projects = [DVBProject allProjectsInContext:mainContext];
     
     [projects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        GOProject *project = obj;
-        [project setStateValue:GOProjectStateWaiting];
+        DVBProject *project = obj;
+        [project setStateValue:DVBProjectStateWaiting];
         
         NSError *savingError = nil;
         if(![[self mainQueueContext] save:&savingError]){

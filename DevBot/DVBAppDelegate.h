@@ -1,5 +1,5 @@
 //
-//  GOAppDelegate.h
+//  DVBAppDelegate.h
 //  DevBot
 //
 //  Created by Samuel Goodwin on 1/10/13.
@@ -7,7 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface GOAppDelegate : NSObject <NSApplicationDelegate>
+@interface DVBAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 

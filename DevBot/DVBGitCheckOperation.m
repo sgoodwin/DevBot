@@ -5,13 +5,13 @@
 //  Created by Samuel Goodwin on 1/10/13.
 //
 
-#import "GOGitCheckOperation.h"
+#import "DVBGitCheckOperation.h"
 
-@interface GOGitCheckOperation()
+@interface DVBGitCheckOperation()
 @property (nonatomic, strong) NSString *folderPath;
 @end
 
-@implementation GOGitCheckOperation
+@implementation DVBGitCheckOperation
 
 - (id)initWithProjectPath:(NSString *)path
 {

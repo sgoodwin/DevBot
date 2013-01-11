@@ -1,25 +1,25 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to GOProject.m instead.
+// Make changes to DVBProject.m instead.
 
-#import "_GOProject.h"
+#import "_DVBProject.h"
 
-const struct GOProjectAttributes GOProjectAttributes = {
+const struct DVBProjectAttributes DVBProjectAttributes = {
 	.path = @"path",
 	.revision = @"revision",
 	.state = @"state",
 	.title = @"title",
 };
 
-const struct GOProjectRelationships GOProjectRelationships = {
+const struct DVBProjectRelationships DVBProjectRelationships = {
 };
 
-const struct GOProjectFetchedProperties GOProjectFetchedProperties = {
+const struct DVBProjectFetchedProperties DVBProjectFetchedProperties = {
 };
 
-@implementation GOProjectID
+@implementation DVBProjectID
 @end
 
-@implementation _GOProject
+@implementation _DVBProject
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
@@ -35,8 +35,8 @@ const struct GOProjectFetchedProperties GOProjectFetchedProperties = {
 	return [NSEntityDescription entityForName:@"Project" inManagedObjectContext:moc_];
 }
 
-- (GOProjectID*)objectID {
-	return (GOProjectID*)[super objectID];
+- (DVBProjectID*)objectID {
+	return (DVBProjectID*)[super objectID];
 }
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
