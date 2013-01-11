@@ -78,7 +78,7 @@
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];
         
-        NSError *buildError = weakOperation.buildError;
+        NSError *buildError = weakOperation.error;
         
         [childContext performBlock:^{
             DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];

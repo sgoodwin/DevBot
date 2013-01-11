@@ -16,8 +16,9 @@ static NSString *const xcodeBuildPath = @"/usr/bin/xcodebuild";
 + (instancetype)newTaskForPath:(NSString *)path
 {
 	NSParameterAssert(path);
-	if (![[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil])
+	if (![[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil]){
 		return nil;
+    }
 	NSTask *gitTask = [NSTask new];
     [gitTask setLaunchPath:path];
 	return gitTask;

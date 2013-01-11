@@ -13,7 +13,7 @@
 
 @property (nonatomic, copy) NSString *folderPath;
 @property (nonatomic, copy) NSString *rawText;
-@property (nonatomic, strong) NSError *buildError;
+@property (nonatomic, strong) NSError *error;
 
 - (id)initWithPath:(NSString *)path;
 

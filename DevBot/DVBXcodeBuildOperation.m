@@ -25,7 +25,6 @@
     self.executing = YES;
     
     [self buildProject];
-    NSLog(@"Raw: %@", self.rawText);
     
     self.executing = NO;
     self.finished = YES;
@@ -44,6 +43,11 @@
 - (void)buildProject
 {
     NSTask *gitTask = [NSTask newXCodeBuildTask];
+    if(!gitTask){
+        self.error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Xcodebuild is not installed or is damaged."}];
+        return;
+    }
+    
     [gitTask setCurrentDirectoryPath:self.folderPath];
     [gitTask setArguments:@[@"-configuration", @"Release"]];
         
@@ -59,7 +63,7 @@
     self.rawText = [[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding];
     
     if([gitTask terminationStatus] != DVBTaskSucessCode){
-        self.buildError = [self errorFromRawText];
+        self.error = [self errorFromRawText];
     }
 }
 
