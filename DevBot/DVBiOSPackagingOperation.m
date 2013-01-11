@@ -7,9 +7,9 @@
 // Thanks to Jay Graves for pointing this out to me (http://skabber.com/package-your-ios-application-with-xcrun)
 
 
-#import "DVBPackagingOperation.h"
+#import "DVBiOSPackagingOperation.h"
 
-@implementation DVBPackagingOperation
+@implementation DVBiOSPackagingOperation
 
 - (id)initWithAppPath:(NSString *)path title:(NSString *)title
 {

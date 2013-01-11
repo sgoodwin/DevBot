@@ -2,7 +2,7 @@
 #import "DVBConstants.h"
 #import "DVBGitCheckOperation.h"
 #import "DVBXcodeBuildOperation.h"
-#import "DVBPackagingOperation.h"
+#import "DVBiOSPackagingOperation.h"
 
 
 @interface DVBProject ()
@@ -94,6 +94,8 @@
                 
                 
                 [project setStateValue:DVBProjectStatePackaging];
+                // TODO: This assumes we're building an iOS project. A different operation should be queued up for OS X projects.
+                // It would sign with developer ID and such.
                 [project packageInQueue:queue withContext:mainContext];
             }
             
@@ -111,8 +113,8 @@
 {
     DVBProjectID *projectID = [self objectID];
     
-    DVBPackagingOperation *packageOperation = [[DVBPackagingOperation alloc] initWithAppPath:self.appPath title:self.title];
-    __weak DVBPackagingOperation *weakOperation = packageOperation;
+    DVBiOSPackagingOperation *packageOperation = [[DVBiOSPackagingOperation alloc] initWithAppPath:self.appPath title:self.title];
+    __weak DVBiOSPackagingOperation *weakOperation = packageOperation;
     [packageOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];

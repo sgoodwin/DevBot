@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DVBPackagingOperation : NSOperation
+@interface DVBiOSPackagingOperation : NSOperation
 @property (assign, getter=isExecuting) BOOL executing;
 @property (assign, getter=isFinished) BOOL finished;
 
