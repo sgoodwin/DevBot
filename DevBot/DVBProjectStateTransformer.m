@@ -25,6 +25,9 @@
         case DVBProjectStateWaiting:
             return @"Waiting...";
             break;
+        case DVBProjectStatePackaging:
+            return @"Packaging...";
+            break;
         case DVBProjectStateFailed:
             return @"FAILED!";
             break;

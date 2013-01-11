@@ -4,7 +4,8 @@
 #import "_DVBProject.h"
 
 const struct DVBProjectAttributes DVBProjectAttributes = {
-	.path = @"path",
+	.appPath = @"appPath",
+	.folderPath = @"folderPath",
 	.revision = @"revision",
 	.state = @"state",
 	.title = @"title",
@@ -54,7 +55,14 @@ const struct DVBProjectFetchedProperties DVBProjectFetchedProperties = {
 
 
 
-@dynamic path;
+@dynamic appPath;
+
+
+
+
+
+
+@dynamic folderPath;
 
 
 

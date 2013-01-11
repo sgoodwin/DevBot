@@ -11,9 +11,12 @@
 @property (assign, getter=isExecuting) BOOL executing;
 @property (assign, getter=isFinished) BOOL finished;
 
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *appPath;
+
 @property (nonatomic, strong) NSError *error;
 @property (nonatomic, copy) NSString *ipaPath;
+@property (nonatomic, copy) NSString *rawText;
 
-- (id)initWithAppPath:(NSString *)path;
+- (id)initWithAppPath:(NSString *)path title:(NSString *)title;
 @end

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C2034" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Project" representedClassName="DVBProject" syncable="YES">
-        <attribute name="path" attributeType="String" syncable="YES"/>
+        <attribute name="appPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="folderPath" attributeType="String" syncable="YES"/>
         <attribute name="revision" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Project" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Project" positionX="0" positionY="0" width="128" height="120"/>
     </elements>
 </model>

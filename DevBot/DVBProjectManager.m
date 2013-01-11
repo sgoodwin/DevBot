@@ -190,7 +190,7 @@
 	
 	DVBProject *project = [DVBProject insertInManagedObjectContext:mainQueueContext];
 	project.title = title;
-	project.path = path;
+	project.folderPath = path;
 	project.stateValue = DVBProjectStateIdle;
 	[self saveMainQueueContext:nil];
 }

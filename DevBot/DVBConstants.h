@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, DVBProjectState){
     DVBProjectStateIdle,
     DVBProjectStateWaiting,
     DVBProjectStateBuilding,
+    DVBProjectStatePackaging,
     DVBProjectStateFailed
 };
 

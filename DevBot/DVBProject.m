@@ -2,6 +2,7 @@
 #import "DVBConstants.h"
 #import "DVBGitCheckOperation.h"
 #import "DVBXcodeBuildOperation.h"
+#import "DVBPackagingOperation.h"
 
 
 @interface DVBProject ()
@@ -34,11 +35,13 @@
     }];
 }
 
+// TODO: decide on a good way to communicate git/build/package errors to the user when this is running on a headless machine.
+
 - (void)updateInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
 {
     DVBProjectID *projectID = [self objectID];
     
-    DVBGitCheckOperation *operation = [[DVBGitCheckOperation alloc] initWithProjectPath:[self path]];
+    DVBGitCheckOperation *operation = [[DVBGitCheckOperation alloc] initWithProjectPath:self.folderPath];
     __weak DVBGitCheckOperation *weakOperation = operation;
     [weakOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
@@ -72,22 +75,26 @@
 {
     DVBProjectID *projectID = [self objectID];
     
-    DVBXcodeBuildOperation *buildOperation = [[DVBXcodeBuildOperation alloc] initWithPath:self.path projectTitle:self.title];
+    DVBXcodeBuildOperation *buildOperation = [[DVBXcodeBuildOperation alloc] initWithPath:self.folderPath projectTitle:self.title];
     __weak DVBXcodeBuildOperation *weakOperation = buildOperation;
     [weakOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];
         
         NSError *buildError = weakOperation.error;
+        NSString *appPath = weakOperation.appFilePath;
         
         [childContext performBlock:^{
             DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];
             
             if(buildError){
                 [project setStateValue:DVBProjectStateFailed];
-                // TODO: decide on a good way to communicate build errors to the user when this is running on a headless machine.
             }else{
-                [project setStateValue:DVBProjectStateIdle];
+                project.appPath = appPath;
+                
+                
+                [project setStateValue:DVBProjectStatePackaging];
+                [project packageInQueue:queue withContext:mainContext];
             }
             
             NSError *savingError = nil;
@@ -98,6 +105,39 @@
     }];
     
     [queue addOperation:buildOperation];
+}
+
+- (void)packageInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
+{
+    DVBProjectID *projectID = [self objectID];
+    
+    DVBPackagingOperation *packageOperation = [[DVBPackagingOperation alloc] initWithAppPath:self.appPath title:self.title];
+    __weak DVBPackagingOperation *weakOperation = packageOperation;
+    [packageOperation setCompletionBlock:^{
+        NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [childContext setParentContext:mainContext];
+        
+        NSError *packageError = weakOperation.error;
+        
+        [childContext performBlock:^{
+            DVBProject *project = (DVBProject*)[childContext
+                                                objectWithID:projectID];
+            
+            if(packageError){
+                [project setStateValue:DVBProjectStateFailed];
+            }else{
+                [project setStateValue:DVBProjectStateIdle];
+            }
+            
+            NSError *savingError = nil;
+            if(![childContext save:&savingError]){
+                NSLog(@"Failed to save child! %@", savingError);
+            }
+        }];
+
+    }];
+    
+    [queue addOperation:packageOperation];
 }
 
 @end
