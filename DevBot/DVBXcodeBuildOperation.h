@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GOXcodeBuildOperation : NSOperation
+@interface DVBXcodeBuildOperation : NSOperation
 @property (assign, getter=isExecuting) BOOL executing;
 @property (assign, getter=isFinished) BOOL finished;
 

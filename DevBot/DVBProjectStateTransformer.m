@@ -5,24 +5,24 @@
 //  Created by Samuel Goodwin on 1/10/13.
 //
 
-#import "GOProjectStateTransformer.h"
-#import "GOConstants.h"
+#import "DVBProjectStateTransformer.h"
+#import "DVBConstants.h"
 
-@implementation GOProjectStateTransformer
+@implementation DVBProjectStateTransformer
 
 + (Class)transformedValueClass { return [NSString class]; }
 + (BOOL)allowsReverseTransformation { return NO; }
 
 - (id)transformedValue:(id)value {
-    GOProjectState state = [(NSNumber*)value unsignedIntegerValue];
+    DVBProjectState state = [(NSNumber*)value unsignedIntegerValue];
     switch(state){
-        case GOProjectStateIdle:
+        case DVBProjectStateIdle:
             return nil;
             break;
-        case GOProjectStateBuilding:
+        case DVBProjectStateBuilding:
             return @"Building...";
             break;
-        case GOProjectStateWaiting:
+        case DVBProjectStateWaiting:
             return @"Waiting...";
             break;
     }

@@ -1,36 +1,36 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to GOProject.h instead.
+// Make changes to DVBProject.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct GOProjectAttributes {
+extern const struct DVBProjectAttributes {
 	__unsafe_unretained NSString *path;
 	__unsafe_unretained NSString *revision;
 	__unsafe_unretained NSString *state;
 	__unsafe_unretained NSString *title;
-} GOProjectAttributes;
+} DVBProjectAttributes;
 
-extern const struct GOProjectRelationships {
-} GOProjectRelationships;
+extern const struct DVBProjectRelationships {
+} DVBProjectRelationships;
 
-extern const struct GOProjectFetchedProperties {
-} GOProjectFetchedProperties;
-
-
+extern const struct DVBProjectFetchedProperties {
+} DVBProjectFetchedProperties;
 
 
 
 
 
-@interface GOProjectID : NSManagedObjectID {}
+
+
+@interface DVBProjectID : NSManagedObjectID {}
 @end
 
-@interface _GOProject : NSManagedObject {}
+@interface _DVBProject : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (GOProjectID*)objectID;
+- (DVBProjectID*)objectID;
 
 
 
@@ -87,11 +87,11 @@ extern const struct GOProjectFetchedProperties {
 
 @end
 
-@interface _GOProject (CoreDataGeneratedAccessors)
+@interface _DVBProject (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _GOProject (CoreDataGeneratedPrimitiveAccessors)
+@interface _DVBProject (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSString*)primitivePath;

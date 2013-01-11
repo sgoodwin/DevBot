@@ -7,6 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GOProjectStateTransformer : NSValueTransformer
+@interface DVBProjectStateTransformer : NSValueTransformer
 
 @end

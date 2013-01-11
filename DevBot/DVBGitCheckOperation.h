@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GOGitCheckOperation : NSOperation
+@interface DVBGitCheckOperation : NSOperation
 @property (nonatomic, copy) NSString *latestRevision;
 @property (nonatomic, copy) NSString *gitPullResults;
 

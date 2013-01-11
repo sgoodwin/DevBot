@@ -5,9 +5,9 @@
 //  Created by Samuel Goodwin on 1/10/13.
 //
 
-#import "GOXcodeBuildOperation.h"
+#import "DVBXcodeBuildOperation.h"
 
-@implementation GOXcodeBuildOperation
+@implementation DVBXcodeBuildOperation
 
 - (id)initWithPath:(NSString *)path
 {

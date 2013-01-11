@@ -9,10 +9,10 @@
 #ifndef DevBot_GOConstants_h
 #define DevBot_GOConstants_h
 
-typedef NS_ENUM(NSUInteger, GOProjectState){
-    GOProjectStateIdle,
-    GOProjectStateWaiting,
-    GOProjectStateBuilding
+typedef NS_ENUM(NSUInteger, DVBProjectState){
+    DVBProjectStateIdle,
+    DVBProjectStateWaiting,
+    DVBProjectStateBuilding
 };
 
 #endif
