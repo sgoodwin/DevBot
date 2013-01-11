@@ -72,7 +72,7 @@
 {
     DVBProjectID *projectID = [self objectID];
     
-    DVBXcodeBuildOperation *buildOperation = [[DVBXcodeBuildOperation alloc] initWithPath:self.path];
+    DVBXcodeBuildOperation *buildOperation = [[DVBXcodeBuildOperation alloc] initWithPath:self.path projectTitle:self.title];
     __weak DVBXcodeBuildOperation *weakOperation = buildOperation;
     [weakOperation setCompletionBlock:^{
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];

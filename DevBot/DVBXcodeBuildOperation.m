@@ -6,16 +6,18 @@
 //
 
 #import "DVBXcodeBuildOperation.h"
+#import "NSString+DVBFileTypes.h"
 
 @implementation DVBXcodeBuildOperation
 
-- (id)initWithPath:(NSString *)path
+- (id)initWithPath:(NSString *)path projectTitle:(NSString *)title
 {
     self = [super init];
     if(self){
-        self.folderPath = path;
-        self.executing = NO;
-        self.finished = NO;
+        _folderPath = [path copy];
+        _title = [title copy];
+        _executing = NO;
+        _finished = NO;
     }
     return self;
 }
@@ -49,7 +51,8 @@
     }
     
     [buildTask setCurrentDirectoryPath:self.folderPath];
-    [buildTask setArguments:@[@"-configuration", @"Release"]];
+    NSString *resultsPath = [self buildDestinationPath];
+    [buildTask setArguments:@[@"-configuration", @"Release", @"DEPLOYMENT_LOCATION=YES", [NSString stringWithFormat:@"DSTROOT=%@", resultsPath], [NSString stringWithFormat:@"DWARF_DSYM_FOLDER_PATH=%@", resultsPath]]];
     
     [buildTask setStandardError:[NSFileHandle fileHandleWithNullDevice]];
     
@@ -64,9 +67,20 @@
     NSData *standardOutputData = [standardOutputHandle readDataToEndOfFile];
     self.rawText = [[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding];
     
-    if([buildTask terminationStatus] != DVBTaskSucessCode){
+    if([buildTask terminationStatus] == DVBTaskSucessCode){
+        [self findDsymAndAppFileInPath:resultsPath];
+    }else{
         self.error = [self errorFromRawText];
     }
+}
+
+#pragma mark - Helpers
+
+- (NSString *)buildDestinationPath
+{
+    // TODO: In the future this might be a user-supplied base directory.
+    NSString *basePath = [@"~/Desktop/DevBotBuilds/" stringByExpandingTildeInPath];
+    return [[basePath stringByAppendingPathComponent:self.title] stringByAppendingPathComponent:[[NSDate date] description]];
 }
 
 - (NSError *)errorFromRawText
@@ -84,6 +98,26 @@
     
     NSString *errorString = [[errorLines allObjects] componentsJoinedByString:@", "];
     return [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: errorString }];
+}
+
+- (void)findDsymAndAppFileInPath:(NSString *)path
+{
+    // Hunting these down because the files are in different places depending on if you're building an OS X app or an iOS app.
+    NSArray *keys = @[NSURLNameKey, NSURLPathKey];
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:path] includingPropertiesForKeys:keys options:NSDirectoryEnumerationSkipsPackageDescendants|NSDirectoryEnumerationSkipsHiddenFiles errorHandler:^BOOL(NSURL *url, NSError *error) {
+        NSLog(@"Error looking for files at url %@: %@", url, error);
+        return YES;
+    }];
+    
+    for(NSURL *fileURL in enumerator){
+        NSString *path = [fileURL path];
+        if([path isPathToAppFile]){
+            self.appFilePath = path;
+        }
+        if([path isPathToDSYMFile]){
+            self.dSYMFilePath = path;
+        }
+    }
 }
 
 @end

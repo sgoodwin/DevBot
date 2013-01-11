@@ -25,6 +25,7 @@
 		9BABF2A5169F8C8200BAC8A3 /* _DVBProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BABF2A2169F8C8200BAC8A3 /* _DVBProject.m */; };
 		9BABF2A6169F8C8200BAC8A3 /* DVBProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BABF2A4169F8C8200BAC8A3 /* DVBProject.m */; };
 		9BDB70B1169F8FCF001BDE1F /* NSTask+DVBTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB70B0169F8FCF001BDE1F /* NSTask+DVBTasks.m */; };
+		9BDB70BD169FA9BC001BDE1F /* NSString+DVBFileTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB70BC169FA9BC001BDE1F /* NSString+DVBFileTypes.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		9BABF2A4169F8C8200BAC8A3 /* DVBProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVBProject.m; sourceTree = "<group>"; };
 		9BDB70AF169F8FCF001BDE1F /* NSTask+DVBTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+DVBTasks.h"; sourceTree = "<group>"; };
 		9BDB70B0169F8FCF001BDE1F /* NSTask+DVBTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+DVBTasks.m"; sourceTree = "<group>"; };
+		9BDB70BB169FA9BC001BDE1F /* NSString+DVBFileTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DVBFileTypes.h"; sourceTree = "<group>"; };
+		9BDB70BC169FA9BC001BDE1F /* NSString+DVBFileTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DVBFileTypes.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,8 @@
 				9B5DBAC1169F75E600AD073F /* DVBConstants.h */,
 				9BDB70AF169F8FCF001BDE1F /* NSTask+DVBTasks.h */,
 				9BDB70B0169F8FCF001BDE1F /* NSTask+DVBTasks.m */,
+				9BDB70BB169FA9BC001BDE1F /* NSString+DVBFileTypes.h */,
+				9BDB70BC169FA9BC001BDE1F /* NSString+DVBFileTypes.m */,
 			);
 			path = DevBot;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 				9BABF2A6169F8C8200BAC8A3 /* DVBProject.m in Sources */,
 				9BDB70B1169F8FCF001BDE1F /* NSTask+DVBTasks.m in Sources */,
 				91F6C9A1169F945300F9D61A /* DVBProjectManager.m in Sources */,
+				9BDB70BD169FA9BC001BDE1F /* NSString+DVBFileTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

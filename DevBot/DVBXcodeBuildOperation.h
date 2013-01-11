@@ -12,9 +12,13 @@
 @property (assign, getter=isFinished) BOOL finished;
 
 @property (nonatomic, copy) NSString *folderPath;
+@property (nonatomic, copy) NSString *title;
+
+@property (nonatomic, copy) NSString *appFilePath;
+@property (nonatomic, copy) NSString *dSYMFilePath;
 @property (nonatomic, copy) NSString *rawText;
 @property (nonatomic, strong) NSError *error;
 
-- (id)initWithPath:(NSString *)path;
+- (id)initWithPath:(NSString *)path projectTitle:(NSString *)title;
 
 @end
