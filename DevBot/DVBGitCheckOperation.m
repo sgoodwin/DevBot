@@ -33,7 +33,6 @@
     }else{
         NSLog(@"Failed to pull to latest!");
     }
-    NSLog (@"Git Operation Results: %@", self.latestRevision);
     
     self.executing = NO;
     self.finished = YES;
@@ -49,6 +48,7 @@
     
     NSPipe *pipe = [NSPipe pipe];
     [gitTask setStandardOutput:pipe];
+    [gitTask setStandardError:[NSFileHandle fileHandleWithNullDevice]];
     
     NSFileHandle *file = [pipe fileHandleForReading];
     

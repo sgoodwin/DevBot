@@ -149,7 +149,6 @@
 
 - (void)processAllProjects
 {
-    NSLog(@"Processing projects...");
     NSManagedObjectContext *mainQueueContext = [self mainQueueContext];
 	NSOperationQueue *processingQueue = [self processingQueue];
     NSArray *projects = [DVBProject allProjectsInContext:mainQueueContext];

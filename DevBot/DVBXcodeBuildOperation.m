@@ -42,27 +42,29 @@
 
 - (void)buildProject
 {
-    NSTask *gitTask = [NSTask newXCodeBuildTask];
-    if(!gitTask){
+    NSTask *buildTask = [NSTask newXCodeBuildTask];
+    if(!buildTask){
         self.error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Xcodebuild is not installed or is damaged."}];
         return;
     }
     
-    [gitTask setCurrentDirectoryPath:self.folderPath];
-    [gitTask setArguments:@[@"-configuration", @"Release"]];
-        
+    [buildTask setCurrentDirectoryPath:self.folderPath];
+    [buildTask setArguments:@[@"-configuration", @"Release"]];
+    
+    [buildTask setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+    
     NSPipe *standardOuputPipe = [NSPipe pipe];
-    [gitTask setStandardOutput:standardOuputPipe];
-        
+    [buildTask setStandardOutput:standardOuputPipe];
+    
     NSFileHandle *standardOutputHandle = [standardOuputPipe fileHandleForReading];
         
-    [gitTask launch];
-    [gitTask waitUntilExit];
+    [buildTask launch];
+    [buildTask waitUntilExit];
         
     NSData *standardOutputData = [standardOutputHandle readDataToEndOfFile];
     self.rawText = [[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding];
     
-    if([gitTask terminationStatus] != DVBTaskSucessCode){
+    if([buildTask terminationStatus] != DVBTaskSucessCode){
         self.error = [self errorFromRawText];
     }
 }
@@ -80,7 +82,6 @@
         [errorLines addObject:[self.rawText substringWithRange:range]];
     }];
     
-    NSLog(@"Error lines: %@", errorLines);
     NSString *errorString = [[errorLines allObjects] componentsJoinedByString:@", "];
     return [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: errorString }];
 }
