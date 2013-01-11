@@ -241,7 +241,7 @@
 		9B5DBA69169F567F00AD073F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = GO;
+				CLASSPREFIX = DVB;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Roundwall Software";
 			};
