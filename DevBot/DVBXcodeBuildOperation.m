@@ -39,6 +39,8 @@
 // using sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer 
 // (or we could write a privileged task operation to do it for them)
 
+// TODO: parsed error text should have proper error codes associated with things
+
 - (void)buildProject
 {
     NSTask *gitTask = [NSTask newXCodeBuildTask];
@@ -55,6 +57,10 @@
         
     NSData *data = [file readDataToEndOfFile];
     self.rawText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    if([gitTask terminationStatus] != DVBTaskSucessCode){
+        self.buildError = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey: @"The Xcode build failed." }];
+    }
 }
 
 @end

@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern const int DVBTaskSucessCode;
+
 @interface NSTask (DVBTasks)
 
 + (instancetype)newTaskForPath:(NSString *)path;

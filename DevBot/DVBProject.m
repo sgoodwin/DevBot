@@ -78,9 +78,16 @@
         NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [childContext setParentContext:mainContext];
         
+        NSError *buildError = weakOperation.buildError;
+        
         [childContext performBlock:^{
             DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];
-            [project setStateValue:DVBProjectStateIdle];
+            
+            if(buildError){
+                [project setStateValue:DVBProjectStateFailed];
+            }else{
+                [project setStateValue:DVBProjectStateIdle];
+            }
             
             NSError *savingError = nil;
             if(![childContext save:&savingError]){

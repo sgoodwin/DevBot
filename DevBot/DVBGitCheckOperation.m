@@ -59,7 +59,7 @@
     
     [gitTask waitUntilExit];
     
-    BOOL worked = [gitTask terminationStatus] == 0;
+    BOOL worked = [gitTask terminationStatus] == DVBTaskSucessCode;
     return worked;
 }
 

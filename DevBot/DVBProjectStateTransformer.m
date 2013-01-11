@@ -25,6 +25,9 @@
         case DVBProjectStateWaiting:
             return @"Waiting...";
             break;
+        case DVBProjectStateFailed:
+            return @"FAILED!";
+            break;
     }
     return nil;
 }

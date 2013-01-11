@@ -9,6 +9,7 @@
 
 @implementation NSTask (DVBTasks)
 
+const int DVBTaskSucessCode = 0;
 static NSString *const xcrunPath = @"/usr/bin/xcrun";
 static NSString *const xcodeBuildPath = @"/usr/bin/xcodebuild";
 
