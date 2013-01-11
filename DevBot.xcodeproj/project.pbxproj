@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91F6C9A1169F945300F9D61A /* DVBProjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6C9A0169F945300F9D61A /* DVBProjectManager.m */; };
 		9B5DBA77169F568000AD073F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5DBA76169F568000AD073F /* Cocoa.framework */; };
 		9B5DBA81169F568000AD073F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B5DBA7F169F568000AD073F /* InfoPlist.strings */; };
 		9B5DBA83169F568000AD073F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5DBA82169F568000AD073F /* main.m */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		91F6C99F169F945300F9D61A /* DVBProjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVBProjectManager.h; sourceTree = "<group>"; };
+		91F6C9A0169F945300F9D61A /* DVBProjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVBProjectManager.m; sourceTree = "<group>"; };
 		9B5DBA72169F568000AD073F /* DevBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5DBA76169F568000AD073F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9B5DBA79169F568000AD073F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -192,6 +195,8 @@
 				9BABF2A4169F8C8200BAC8A3 /* DVBProject.m */,
 				9B5DBAB4169F5AED00AD073F /* DVBProjectStateTransformer.h */,
 				9B5DBAB5169F5AED00AD073F /* DVBProjectStateTransformer.m */,
+				91F6C99F169F945300F9D61A /* DVBProjectManager.h */,
+				91F6C9A0169F945300F9D61A /* DVBProjectManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				9BABF2A5169F8C8200BAC8A3 /* _DVBProject.m in Sources */,
 				9BABF2A6169F8C8200BAC8A3 /* DVBProject.m in Sources */,
 				9BDB70B1169F8FCF001BDE1F /* NSTask+DVBTasks.m in Sources */,
+				91F6C9A1169F945300F9D61A /* DVBProjectManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
