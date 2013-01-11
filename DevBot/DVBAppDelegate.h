@@ -11,13 +11,9 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *mainQueueContext;
-@property (nonatomic, strong) NSOperationQueue *processingQueue;
-
 - (IBAction)saveAction:(id)sender;
 
 - (IBAction)addProject:(id)sender;
 - (IBAction)runSomething:(id)sender;
+
 @end
