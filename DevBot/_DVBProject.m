@@ -6,6 +6,7 @@
 const struct DVBProjectAttributes DVBProjectAttributes = {
 	.appPath = @"appPath",
 	.folderPath = @"folderPath",
+	.ipaPath = @"ipaPath",
 	.revision = @"revision",
 	.state = @"state",
 	.title = @"title",
@@ -63,6 +64,13 @@ const struct DVBProjectFetchedProperties DVBProjectFetchedProperties = {
 
 
 @dynamic folderPath;
+
+
+
+
+
+
+@dynamic ipaPath;
 
 
 

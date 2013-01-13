@@ -3,6 +3,7 @@
 #import "DVBGitCheckOperation.h"
 #import "DVBXcodeBuildOperation.h"
 #import "DVBiOSPackagingOperation.h"
+#import "DVBTestflightUploadOperation.h"
 
 
 @interface DVBProject ()
@@ -120,12 +121,46 @@
         [childContext setParentContext:mainContext];
         
         NSError *packageError = weakOperation.error;
+        NSString *ipaPath = weakOperation.ipaPath;
         
         [childContext performBlock:^{
-            DVBProject *project = (DVBProject*)[childContext
-                                                objectWithID:projectID];
-            
+            DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];
+            project.ipaPath = ipaPath;
             if(packageError){
+                [project setStateValue:DVBProjectStateFailed];
+            }else{
+                [project setStateValue:DVBPRojectStateUploading];
+                [project uploadInQueue:queue withContext:mainContext];
+            }
+            
+            NSError *savingError = nil;
+            if(![childContext save:&savingError]){
+                NSLog(@"Failed to save child! %@", savingError);
+            }
+
+        }];
+
+    }];
+    
+    [queue addOperation:packageOperation];
+}
+
+- (void)uploadInQueue:(NSOperationQueue *)queue withContext:(NSManagedObjectContext *)mainContext
+{
+    DVBProjectID *projectID = [self objectID];
+    
+    DVBTestflightUploadOperation *uploadOperation = [[DVBTestflightUploadOperation alloc] initWithIPAPath:self.ipaPath];
+    __weak DVBTestflightUploadOperation *weakOperation = uploadOperation;
+    [uploadOperation setCompletionBlock:^{
+        NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [childContext setParentContext:mainContext];
+        
+        NSError *uploadError = weakOperation.error;
+        
+        [childContext performBlock:^{
+            DVBProject *project = (DVBProject*)[childContext objectWithID:projectID];
+            
+            if(uploadError){
                 [project setStateValue:DVBProjectStateFailed];
             }else{
                 [project setStateValue:DVBProjectStateIdle];
@@ -136,10 +171,9 @@
                 NSLog(@"Failed to save child! %@", savingError);
             }
         }];
-
     }];
     
-    [queue addOperation:packageOperation];
+    [queue addOperation:uploadOperation];
 }
 
 @end

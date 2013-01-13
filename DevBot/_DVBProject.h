@@ -7,6 +7,7 @@
 extern const struct DVBProjectAttributes {
 	__unsafe_unretained NSString *appPath;
 	__unsafe_unretained NSString *folderPath;
+	__unsafe_unretained NSString *ipaPath;
 	__unsafe_unretained NSString *revision;
 	__unsafe_unretained NSString *state;
 	__unsafe_unretained NSString *title;
@@ -17,6 +18,7 @@ extern const struct DVBProjectRelationships {
 
 extern const struct DVBProjectFetchedProperties {
 } DVBProjectFetchedProperties;
+
 
 
 
@@ -53,6 +55,16 @@ extern const struct DVBProjectFetchedProperties {
 
 
 //- (BOOL)validateFolderPath:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* ipaPath;
+
+
+
+//- (BOOL)validateIpaPath:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -114,6 +126,12 @@ extern const struct DVBProjectFetchedProperties {
 
 - (NSString*)primitiveFolderPath;
 - (void)setPrimitiveFolderPath:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveIpaPath;
+- (void)setPrimitiveIpaPath:(NSString*)value;
 
 
 

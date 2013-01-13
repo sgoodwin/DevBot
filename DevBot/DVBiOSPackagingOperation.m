@@ -40,22 +40,31 @@
 - (BOOL)packageApp
 {
     NSTask *packageTask = [NSTask newXCRunTask];
-    [packageTask setArguments:@[@"-sdk", @"iphoneos", @"PackageApplication", @"-v", self.appPath, @"-o", [self ipaPath]]];
+    [packageTask setEnvironment:@{
+     @"CODESIGN_ALLOCATE": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate",
+     @"PATH": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"}];
+    [packageTask setArguments:@[@"-sdk", @"iphoneos", @"PackageApplication", @"-v", self.appPath, @"-o", [self ipaPath], @"--sign", @"iPhone Distribution: Samuel Ryan Goodwin", @"--embed", @"/Users/sgoodwin/Library/MobileDevice/Provisioning Profiles/063D014E-A00D-461D-B524-3EA9EA248D1A.mobileprovision"]];
     
-    NSPipe *pipe = [NSPipe pipe];
-    [packageTask setStandardOutput:pipe];
-    //[packageTask setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+    NSPipe *outputPipe = [NSPipe pipe];
+    NSPipe *errorPipe = [NSPipe pipe];
+    [packageTask setStandardOutput:outputPipe];
+    [packageTask setStandardError:errorPipe];
     
-    NSFileHandle *file = [pipe fileHandleForReading];
+    NSFileHandle *outputFile = [outputPipe fileHandleForReading];
+    NSFileHandle *errorFile = [errorPipe fileHandleForReading];
     
     [packageTask launch];
     
-    NSData *data = [file readDataToEndOfFile];
-    self.rawText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSData *outputData = [outputFile readDataToEndOfFile];
+    self.rawText = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
     
     [packageTask waitUntilExit];
     
     BOOL worked = [packageTask terminationStatus] == DVBTaskSucessCode;
+    if(!worked){
+        NSData *errorData = [errorFile readDataToEndOfFile];
+        self.error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding]}];
+    }
     return worked;
 }
 

@@ -3,11 +3,12 @@
     <entity name="Project" representedClassName="DVBProject" syncable="YES">
         <attribute name="appPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="folderPath" attributeType="String" syncable="YES"/>
+        <attribute name="ipaPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="revision" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Project" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Project" positionX="0" positionY="0" width="128" height="135"/>
     </elements>
 </model>
