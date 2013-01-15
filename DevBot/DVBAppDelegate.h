@@ -13,7 +13,7 @@
 
 - (IBAction)saveAction:(id)sender;
 
-- (IBAction)addProject:(id)sender;
+- (IBAction)open:(id)sender;
 - (IBAction)runSomething:(id)sender;
 
 @end

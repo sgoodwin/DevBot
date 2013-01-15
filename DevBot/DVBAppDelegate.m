@@ -81,7 +81,7 @@
     return NSTerminateNow;
 }
 
-- (IBAction)addProject:(id)sender
+- (IBAction)open:(id)sender
 {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseDirectories:YES];
