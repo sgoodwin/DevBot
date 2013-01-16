@@ -54,7 +54,7 @@
     }];
     
     //add data field and file data
-	[postBody appendData:[@"Content-Disposition: form-data; name=\"file\"\r\n" dataUsingEncoding:encoding]];
+	[postBody appendData:[@"Content-Disposition: form-data; name=\"file\"; filename=\"app.ipa\"\r\n" dataUsingEncoding:encoding]];
 	[postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:encoding]];
 	[postBody appendData:data];
 	[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", stringBoundary] dataUsingEncoding:encoding]];
@@ -63,7 +63,7 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
         NSString *responseString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"UPload response: %@", responseString);
+        NSLog(@"Upload response: %@", responseString);
         
         self.executing = NO;
         self.finished = YES;
